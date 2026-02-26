@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import type { Request, Response } from 'express';
+import type { Request, Response, Router as RouterType } from 'express';
 import { randomUUID } from 'node:crypto';
 import { listRules, getRuleById, searchRules, createRule, updateRule, deleteRule } from './database.js';
 
@@ -11,7 +11,7 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
-const router = Router();
+const router: RouterType = Router();
 
 // List all rules (with optional search)
 router.get('/', (req: Request, res: Response) => {
