@@ -42,7 +42,8 @@ export function createRulesStorage(): RulesStorageOperations {
         };
       });
 
-      return newRule!;
+      if (!newRule) throw new Error('Failed to create rule');
+      return newRule;
     },
 
     updateRule: async (id, updates): Promise<Rule | undefined> => {

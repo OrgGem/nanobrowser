@@ -53,9 +53,13 @@ export function getRuleById(id: string): ServerRule | undefined {
 }
 
 export function searchRules(query: string): ServerRule[] {
-  const pattern = `%${query}%`;
+  // Escape LIKE special characters to prevent pattern injection
+  const escaped = query.replace(/[%_\\]/g, '\\$&');
+  const pattern = `%${escaped}%`;
   return getDatabase()
-    .prepare('SELECT * FROM rules WHERE name LIKE ? OR description LIKE ? ORDER BY updated_at DESC')
+    .prepare(
+      "SELECT * FROM rules WHERE name LIKE ? ESCAPE '\\' OR description LIKE ? ESCAPE '\\' ORDER BY updated_at DESC",
+    )
     .all(pattern, pattern) as ServerRule[];
 }
 

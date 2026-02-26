@@ -57,6 +57,7 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
       setServerRules(data.rules ?? []);
     } catch {
       setServerRules([]);
+      showStatus(t('options_rules_serverError'));
     }
   }, [serverUrl]);
 
@@ -141,19 +142,10 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
         }),
       });
       if (!resp.ok) throw new Error('Push failed');
-      const data = await resp.json();
-      await rulesStorage.updateRule(rule.id, {});
-      // Store the serverId mapping locally
-      if (data.rule?.id) {
-        await rulesStorage.addRule(rule.name, rule.content, {
-          source: 'server',
-          serverId: data.rule.id,
-          author: rule.author,
-          description: rule.description,
-        });
-      }
+      await resp.json();
       showStatus(t('options_rules_pushSuccess'));
       await loadServerRules();
+      await loadLocalRules();
     } catch {
       showStatus(t('options_rules_serverError'));
     }

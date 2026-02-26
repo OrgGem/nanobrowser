@@ -4,10 +4,11 @@ import rulesRouter from './routes.js';
 import { initDatabase } from './database.js';
 
 const PORT = parseInt(process.env.PORT ?? '3456', 10);
+const CORS_ORIGIN = process.env.CORS_ORIGIN ?? '*';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json({ limit: '2mb' }));
 
 // Health-check
