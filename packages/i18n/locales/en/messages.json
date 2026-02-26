@@ -967,5 +967,80 @@
         "example": "Option not found"
       }
     }
+  },
+  "options_tabs_rules": {
+    "message": "Rules"
+  },
+  "options_rules_header": {
+    "message": "Rules Management"
+  },
+  "options_rules_description": {
+    "message": "Manage markdown-based rule files (skill files) that guide agent behavior. Rules can be stored locally or shared via a centralized server."
+  },
+  "options_rules_serverUrl_label": {
+    "message": "Server URL"
+  },
+  "options_rules_serverUrl_placeholder": {
+    "message": "e.g. http://localhost:3456"
+  },
+  "options_rules_btnSaveServer": {
+    "message": "Save"
+  },
+  "options_rules_localRules_header": {
+    "message": "Local Rules"
+  },
+  "options_rules_serverRules_header": {
+    "message": "Server Rules"
+  },
+  "options_rules_btnAddRule": {
+    "message": "Add Rule"
+  },
+  "options_rules_btnEdit": {
+    "message": "Edit"
+  },
+  "options_rules_btnDelete": {
+    "message": "Delete"
+  },
+  "options_rules_btnPush": {
+    "message": "Push to Server"
+  },
+  "options_rules_btnPull": {
+    "message": "Pull from Server"
+  },
+  "options_rules_btnPullAll": {
+    "message": "Pull All from Server"
+  },
+  "options_rules_btnSave": {
+    "message": "Save"
+  },
+  "options_rules_btnCancel": {
+    "message": "Cancel"
+  },
+  "options_rules_namePlaceholder": {
+    "message": "Rule name"
+  },
+  "options_rules_descriptionPlaceholder": {
+    "message": "Brief description (optional)"
+  },
+  "options_rules_contentPlaceholder": {
+    "message": "Rule content (markdown)"
+  },
+  "options_rules_emptyLocal": {
+    "message": "No local rules yet. Click \"Add Rule\" to create one."
+  },
+  "options_rules_emptyServer": {
+    "message": "No rules found on server. Configure the server URL above and ensure the server is running."
+  },
+  "options_rules_pushSuccess": {
+    "message": "Rule pushed to server successfully"
+  },
+  "options_rules_pullSuccess": {
+    "message": "Rule pulled from server successfully"
+  },
+  "options_rules_serverError": {
+    "message": "Failed to communicate with server. Please check the server URL and ensure it is running."
+  },
+  "options_rules_errors_invalidUrl": {
+    "message": "Invalid URL. Please enter a valid http:// or https:// URL."
   }
 }

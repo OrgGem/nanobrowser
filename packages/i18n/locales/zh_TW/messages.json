@@ -959,5 +959,80 @@
         "example": "Option not found"
       }
     }
+  },
+  "options_tabs_rules": {
+    "message": "規則"
+  },
+  "options_rules_header": {
+    "message": "規則管理"
+  },
+  "options_rules_description": {
+    "message": "管理基於 Markdown 的規則檔案（技能檔案），用於引導代理行為。規則可以儲存在本地或透過集中式伺服器共享。"
+  },
+  "options_rules_serverUrl_label": {
+    "message": "伺服器 URL"
+  },
+  "options_rules_serverUrl_placeholder": {
+    "message": "例如 http://localhost:3456"
+  },
+  "options_rules_btnSaveServer": {
+    "message": "儲存"
+  },
+  "options_rules_localRules_header": {
+    "message": "本地規則"
+  },
+  "options_rules_serverRules_header": {
+    "message": "伺服器規則"
+  },
+  "options_rules_btnAddRule": {
+    "message": "新增規則"
+  },
+  "options_rules_btnEdit": {
+    "message": "編輯"
+  },
+  "options_rules_btnDelete": {
+    "message": "刪除"
+  },
+  "options_rules_btnPush": {
+    "message": "推送至伺服器"
+  },
+  "options_rules_btnPull": {
+    "message": "從伺服器拉取"
+  },
+  "options_rules_btnPullAll": {
+    "message": "從伺服器全部拉取"
+  },
+  "options_rules_btnSave": {
+    "message": "儲存"
+  },
+  "options_rules_btnCancel": {
+    "message": "取消"
+  },
+  "options_rules_namePlaceholder": {
+    "message": "規則名稱"
+  },
+  "options_rules_descriptionPlaceholder": {
+    "message": "簡短描述（選填）"
+  },
+  "options_rules_contentPlaceholder": {
+    "message": "規則內容（Markdown）"
+  },
+  "options_rules_emptyLocal": {
+    "message": "尚無本地規則。點擊「新增規則」來建立一個。"
+  },
+  "options_rules_emptyServer": {
+    "message": "伺服器上未找到規則。請在上方配置伺服器 URL 並確保伺服器正在運行。"
+  },
+  "options_rules_pushSuccess": {
+    "message": "規則已成功推送至伺服器"
+  },
+  "options_rules_pullSuccess": {
+    "message": "規則已成功從伺服器拉取"
+  },
+  "options_rules_serverError": {
+    "message": "與伺服器通訊失敗。請檢查伺服器 URL 並確保其正在運行。"
+  },
+  "options_rules_errors_invalidUrl": {
+    "message": "無效的 URL。請輸入有效的 http:// 或 https:// URL。"
   }
 }
