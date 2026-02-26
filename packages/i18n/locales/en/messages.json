@@ -1039,5 +1039,8 @@
   },
   "options_rules_serverError": {
     "message": "Failed to communicate with server. Please check the server URL and ensure it is running."
+  },
+  "options_rules_errors_invalidUrl": {
+    "message": "Invalid URL. Please enter a valid http:// or https:// URL."
   }
 }

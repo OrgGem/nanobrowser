@@ -1031,5 +1031,8 @@
   },
   "options_rules_serverError": {
     "message": "與伺服器通訊失敗。請檢查伺服器 URL 並確保其正在運行。"
+  },
+  "options_rules_errors_invalidUrl": {
+    "message": "無效的 URL。請輸入有效的 http:// 或 https:// URL。"
   }
 }

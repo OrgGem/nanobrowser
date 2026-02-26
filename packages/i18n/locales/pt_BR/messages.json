@@ -1038,5 +1038,8 @@
   },
   "options_rules_serverError": {
     "message": "Falha na comunicação com o servidor. Verifique a URL do servidor e certifique-se de que ele está em execução."
+  },
+  "options_rules_errors_invalidUrl": {
+    "message": "URL inválida. Insira uma URL válida com http:// ou https://."
   }
 }

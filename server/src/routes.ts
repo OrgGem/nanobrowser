@@ -63,6 +63,11 @@ router.put('/:id', (req: Request<{ id: string }>, res: Response) => {
   if (typeof req.body?.description === 'string')
     updates.description = req.body.description.slice(0, MAX_DESCRIPTION_LENGTH);
 
+  if (Object.keys(updates).length === 0) {
+    res.status(400).json({ error: 'At least one of name, content, or description must be provided' });
+    return;
+  }
+
   const rule = updateRule(req.params.id, updates);
   if (!rule) {
     res.status(404).json({ error: 'Rule not found' });

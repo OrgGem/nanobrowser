@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { rulesStorage } from '@extension/storage';
 import type { Rule } from '@extension/storage';
 import { Button } from '@extension/ui';
@@ -18,12 +18,22 @@ interface ServerRuleItem {
   updated_at: string;
 }
 
+function isValidHttpUrl(str: string): boolean {
+  try {
+    const url = new URL(str);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
   const [localRules, setLocalRules] = useState<Rule[]>([]);
   const [serverRules, setServerRules] = useState<ServerRuleItem[]>([]);
   const [serverUrl, setServerUrl] = useState('');
   const [serverUrlInput, setServerUrlInput] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
+  const statusTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Editor state
   const [editingRule, setEditingRule] = useState<Rule | null>(null);
@@ -32,10 +42,18 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
   const [formDescription, setFormDescription] = useState('');
   const [formContent, setFormContent] = useState('');
 
-  const showStatus = (msg: string) => {
+  // Clean up status timer on unmount
+  useEffect(() => {
+    return () => {
+      if (statusTimerRef.current) clearTimeout(statusTimerRef.current);
+    };
+  }, []);
+
+  const showStatus = useCallback((msg: string) => {
     setStatusMessage(msg);
-    setTimeout(() => setStatusMessage(''), 3000);
-  };
+    if (statusTimerRef.current) clearTimeout(statusTimerRef.current);
+    statusTimerRef.current = setTimeout(() => setStatusMessage(''), 3000);
+  }, []);
 
   const loadLocalRules = useCallback(async () => {
     const rules = await rulesStorage.getAllRules();
@@ -49,7 +67,7 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
   }, []);
 
   const loadServerRules = useCallback(async () => {
-    if (!serverUrl) return;
+    if (!serverUrl || !isValidHttpUrl(serverUrl)) return;
     try {
       const resp = await fetch(`${serverUrl}/api/rules`);
       if (!resp.ok) throw new Error('Server error');
@@ -59,7 +77,7 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
       setServerRules([]);
       showStatus(t('options_rules_serverError'));
     }
-  }, [serverUrl]);
+  }, [serverUrl, showStatus]);
 
   useEffect(() => {
     loadLocalRules();
@@ -73,6 +91,10 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
   // ---- Server URL ----
   const handleSaveServerUrl = async () => {
     const cleanUrl = serverUrlInput.trim().replace(/\/+$/, '');
+    if (cleanUrl && !isValidHttpUrl(cleanUrl)) {
+      showStatus(t('options_rules_errors_invalidUrl'));
+      return;
+    }
     await rulesStorage.setServerUrl(cleanUrl);
     setServerUrl(cleanUrl);
   };
@@ -129,7 +151,7 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
 
   // ---- Push / Pull ----
   const handlePush = async (rule: Rule) => {
-    if (!serverUrl) return;
+    if (!serverUrl || !isValidHttpUrl(serverUrl)) return;
     try {
       const resp = await fetch(`${serverUrl}/api/rules`, {
         method: 'POST',
@@ -152,8 +174,9 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
   };
 
   const handlePullSingle = async (serverRule: ServerRuleItem) => {
-    // Check if already exists locally (by serverId)
-    const existing = localRules.find(r => r.serverId === serverRule.id);
+    // Read fresh local rules from storage to avoid stale closure issues
+    const currentRules = await rulesStorage.getAllRules();
+    const existing = currentRules.find(r => r.serverId === serverRule.id);
     if (existing) {
       await rulesStorage.updateRule(existing.id, {
         name: serverRule.name,
@@ -168,12 +191,10 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
         description: serverRule.description,
       });
     }
-    showStatus(t('options_rules_pullSuccess'));
-    await loadLocalRules();
   };
 
   const handlePullAll = async () => {
-    if (!serverUrl) return;
+    if (!serverUrl || !isValidHttpUrl(serverUrl)) return;
     try {
       const resp = await fetch(`${serverUrl}/api/rules`);
       if (!resp.ok) throw new Error('Fetch failed');
@@ -182,6 +203,8 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
       for (const sr of rules) {
         await handlePullSingle(sr);
       }
+      showStatus(t('options_rules_pullSuccess'));
+      await loadLocalRules();
     } catch {
       showStatus(t('options_rules_serverError'));
     }
@@ -378,7 +401,11 @@ export const RuleSettings = ({ isDarkMode }: RuleSettingsProps) => {
                     </div>
                     <div className="ml-2 shrink-0">
                       <Button
-                        onClick={() => handlePullSingle(rule)}
+                        onClick={async () => {
+                          await handlePullSingle(rule);
+                          showStatus(t('options_rules_pullSuccess'));
+                          await loadLocalRules();
+                        }}
                         className={`px-2 py-1 text-xs ${isDarkMode ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>
                         {t('options_rules_btnPull')}
                       </Button>

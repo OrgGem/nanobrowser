@@ -1,8 +1,5 @@
 import Database from 'better-sqlite3';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export interface ServerRule {
   id: string;
@@ -17,7 +14,7 @@ export interface ServerRule {
 let db: Database.Database;
 
 export function initDatabase(dbPath?: string): Database.Database {
-  const resolvedPath = dbPath ?? path.join(__dirname, '..', 'rules.db');
+  const resolvedPath = dbPath ?? path.join(process.cwd(), 'rules.db');
   db = new Database(resolvedPath);
 
   db.pragma('journal_mode = WAL');
@@ -70,7 +67,9 @@ export function createRule(rule: Omit<ServerRule, 'created_at' | 'updated_at'>):
       'INSERT INTO rules (id, name, content, author, description, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
     )
     .run(rule.id, rule.name, rule.content, rule.author ?? '', rule.description ?? '', now, now);
-  return getRuleById(rule.id)!;
+  const created = getRuleById(rule.id);
+  if (!created) throw new Error('Failed to create rule');
+  return created;
 }
 
 export function updateRule(
