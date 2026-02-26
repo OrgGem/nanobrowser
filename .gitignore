@@ -30,3 +30,5 @@ chrome-extension/public/manifest.json
 .cursor
 *.py
 server/rules.db
+server/rules.db-shm
+server/rules.db-wal

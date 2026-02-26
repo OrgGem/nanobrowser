@@ -966,5 +966,77 @@
         "example": "Opção não encontrada"
       }
     }
+  },
+  "options_tabs_rules": {
+    "message": "Regras"
+  },
+  "options_rules_header": {
+    "message": "Gerenciamento de Regras"
+  },
+  "options_rules_description": {
+    "message": "Gerencie arquivos de regras baseados em markdown (arquivos de habilidades) que orientam o comportamento do agente. As regras podem ser armazenadas localmente ou compartilhadas via um servidor centralizado."
+  },
+  "options_rules_serverUrl_label": {
+    "message": "URL do Servidor"
+  },
+  "options_rules_serverUrl_placeholder": {
+    "message": "ex. http://localhost:3456"
+  },
+  "options_rules_btnSaveServer": {
+    "message": "Salvar"
+  },
+  "options_rules_localRules_header": {
+    "message": "Regras Locais"
+  },
+  "options_rules_serverRules_header": {
+    "message": "Regras do Servidor"
+  },
+  "options_rules_btnAddRule": {
+    "message": "Adicionar Regra"
+  },
+  "options_rules_btnEdit": {
+    "message": "Editar"
+  },
+  "options_rules_btnDelete": {
+    "message": "Excluir"
+  },
+  "options_rules_btnPush": {
+    "message": "Enviar ao Servidor"
+  },
+  "options_rules_btnPull": {
+    "message": "Baixar do Servidor"
+  },
+  "options_rules_btnPullAll": {
+    "message": "Baixar Tudo do Servidor"
+  },
+  "options_rules_btnSave": {
+    "message": "Salvar"
+  },
+  "options_rules_btnCancel": {
+    "message": "Cancelar"
+  },
+  "options_rules_namePlaceholder": {
+    "message": "Nome da regra"
+  },
+  "options_rules_descriptionPlaceholder": {
+    "message": "Descrição breve (opcional)"
+  },
+  "options_rules_contentPlaceholder": {
+    "message": "Conteúdo da regra (markdown)"
+  },
+  "options_rules_emptyLocal": {
+    "message": "Nenhuma regra local ainda. Clique em \"Adicionar Regra\" para criar uma."
+  },
+  "options_rules_emptyServer": {
+    "message": "Nenhuma regra encontrada no servidor. Configure a URL do servidor acima e certifique-se de que o servidor está em execução."
+  },
+  "options_rules_pushSuccess": {
+    "message": "Regra enviada ao servidor com sucesso"
+  },
+  "options_rules_pullSuccess": {
+    "message": "Regra baixada do servidor com sucesso"
+  },
+  "options_rules_serverError": {
+    "message": "Falha na comunicação com o servidor. Verifique a URL do servidor e certifique-se de que ele está em execução."
   }
 }
